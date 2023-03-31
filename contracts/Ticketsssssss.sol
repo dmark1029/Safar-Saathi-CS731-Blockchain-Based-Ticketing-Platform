@@ -94,15 +94,16 @@ contract EventFactory{
         }
         return avail;
     }
-    function buyTicket(uint _eventId, uint _ticketNo) public payable{
-        require(users[msg.sender].doesExist);
+    function buyTicket(uint _eventId, uint _ticketNo) public returns(uint) {
+        //require(users[msg.sender].doesExist);
         Event storage e = events[_eventId];
-        require(currentPrice(_eventId) <= msg.value, "The Price of Ticket doesn't match");
-        require(_ticketNo<e.numTickets, "Ticket No. doesn't exist");
-        require(!e.tickets[_ticketNo].isSold, "This ticket is soldout choose another seat");
+       // require(currentPrice(_eventId) <= msg.value, "The Price of Ticket doesn't match");
+       require(_ticketNo<e.numTickets, "Ticket No. doesn't exist");
+       require(!e.tickets[_ticketNo].isSold, "This ticket is soldout choose another seat");
         e.tickets[_ticketNo].isSold = true;
         e.unSoldTickets--;
         e.tickets[_ticketNo].owner = payable(msg.sender);
+        return e.unSoldTickets;
     }
 
     function currentPrice(uint _eventId) public view returns(uint){
