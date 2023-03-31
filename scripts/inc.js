@@ -22,7 +22,7 @@ module.exports = async function (callback) {
     console.log((await deployed.showAvailableTickets(eval-2)).toString());
     console.log((await deployed.showAvailableTickets(eval-1)).toString());
     console.log(eval);
-    console.log((await deployed.buyTicket.call(eval-2,6)).toNumber());
+    console.log((await deployed.buyTicket.sendTransaction(eval-2,6)));
     // console.log((await deployed.buyTicket.call(eval-2,6)).toString());
     // const {aa} = await deployed.buyTicket.send(eval-2,6);
     // const {aa} = await deployed.currentPrice(0);
