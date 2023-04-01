@@ -10,7 +10,9 @@ function ViewAvailableTickets (index) {
     useEffect(() => {
         const getTickets = async () => {
             const temp = await contract.methods.showAvailableTickets(index1).call();
-            // console.log(temp);
+            console.log(temp);
+            const value1 = await contract.methods.returnEvents().call();
+            console.log(value1);
             setTickets(temp);
         };
         getTickets();
@@ -23,8 +25,25 @@ function ViewAvailableTickets (index) {
         <>
         <Container>
             <Row>
-            <Col>
-                    <h3>Available Tickets</h3>
+                <Col>
+                    <h1>Available Tickets</h1>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <div>Date</div>
+                </Col>
+                <Col>
+                    <div>Source</div>
+                </Col>
+                <Col>
+                    <div>Destination</div>
+                </Col>
+                <Col>
+                    <div>Price</div>
+                </Col>
+                <Col>
+                    <div>Mode Of Transportaion</div>
                 </Col>
             </Row>
             <Row >

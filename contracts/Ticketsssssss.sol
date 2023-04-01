@@ -3,7 +3,7 @@ pragma solidity ^0.8.19;
 
 
 contract EventFactory{
-    mapping (uint => Event) public events;
+    Event[] public events;
     uint public eventIndex;
     uint[] ats;
 
@@ -31,7 +31,11 @@ contract EventFactory{
         uint ticketPrice;
         string src;
         string dest;
-        mapping(uint => Ticket) tickets;
+        Ticket[] tickets;
+    }
+
+    function returnEvents() public view returns(Event[] memory){
+        return events;
     }
 
     function addUser(string memory _name, bool _isProvider) public{

@@ -3,7 +3,7 @@ pragma solidity ^0.8.18;
 
 
 contract EventFactory{
-    mapping (uint => Event) public events;
+    Event[] public events;
     uint public eventIndex;
     uint[] ats;
 
@@ -34,6 +34,10 @@ contract EventFactory{
         mapping(uint => Ticket) tickets;
     }
 
+    function returnEvents() public view returns(Event[] memory){
+        return events;
+    }
+
     function addUser(string memory _name, bool _isProvider) public{
         User storage provider = users[msg.sender];
         provider.name = _name;
@@ -47,7 +51,7 @@ contract EventFactory{
 
     function createEvent(string memory _name, uint _numTickets, uint _ticketPrice, string memory _src, string memory _dest) public{
         require(users[msg.sender].doesExist && users[msg.sender].isProvider);
-        Event storage e = events[eventIndex];
+        Event storage e = events.push(eventIndex);
         e.owner = payable(msg.sender);
         e.eventId = eventIndex;
         e.name = _name;
