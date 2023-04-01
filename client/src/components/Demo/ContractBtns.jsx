@@ -21,7 +21,7 @@ function ContractBtns() {
     setValue(value);
   };
   const CreateEvent = async () => {
-    const {tt} = await contract.methods.createEvent("Train", 10, 2, "Knapur", "Delhi").send({from : accounts[0]});
+    const {tt} = await contract.methods.createEvent("Train",1, 10, 2, "Knapur", "Delhi").send({from : accounts[0]});
     console.log(tt);
   }
 

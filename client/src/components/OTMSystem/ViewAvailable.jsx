@@ -11,7 +11,7 @@ function ViewAvailableTickets (index) {
         const getTickets = async () => {
             const temp = await contract.methods.showAvailableTickets(index1).call();
             console.log(temp);
-            const value1 = await contract.methods.returnEvents().call();
+            const value1 = await contract.methods.showAllEvents().call();
             console.log(value1);
             setTickets(temp);
         };
