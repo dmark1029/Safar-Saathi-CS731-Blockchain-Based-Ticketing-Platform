@@ -3,7 +3,7 @@ pragma solidity ^0.8.18;
 
 
 contract EventFactory{
-    mapping (uint => Event) public events;
+    Event[] public events;
     uint public eventIndex;
     uint[] ats;
 
@@ -23,15 +23,20 @@ contract EventFactory{
     }
     struct Event{
         address payable owner;
+        string creatorName;
         uint eventId;
-        string name;
-        uint date;
+        string date;
+        uint modeOfTrans;
         uint numTickets;
         uint unSoldTickets;
         uint ticketPrice;
         string src;
         string dest;
-        mapping(uint => Ticket) tickets;
+        Ticket[] tickets;
+    }
+    
+    function showAllEvents () public returns (Event[] memory){
+        return events;
     }
 
     function addUser(string memory _name, bool _isProvider) public{
@@ -45,20 +50,21 @@ contract EventFactory{
         users[msg.sender].doesExist = false;
     }
 
-    function createEvent(string memory _name, uint _numTickets, uint _ticketPrice, string memory _src, string memory _dest) public{
+    function createEvent(string memory _date, uint _mode, uint _numTickets, uint _ticketPrice, string memory _src, string memory _dest) public{
         require(users[msg.sender].doesExist && users[msg.sender].isProvider);
+        events.push({});
         Event storage e = events[eventIndex];
+        // require(false,"Yo");
         e.owner = payable(msg.sender);
         e.eventId = eventIndex;
-        e.name = _name;
-        e.date = block.timestamp;
         e.numTickets = _numTickets;
         e.unSoldTickets = _numTickets;
         e.ticketPrice = _ticketPrice*10**18;
         e.src = _src;
         e.dest = _dest;
         for(uint i=1; i<=_numTickets; i++){
-            Ticket storage newTicket = e.tickets[i];
+            e.tickets.push({});
+            Ticket storage newTicket = e.tickets[i-1];
             newTicket.owner = payable(msg.sender);
             newTicket.ticketId = i;
             newTicket.eventId = eventIndex;
