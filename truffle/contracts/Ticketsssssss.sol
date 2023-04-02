@@ -9,39 +9,48 @@ contract EventFactory{
 
     struct User{
         string name;
+        string dob;
+        string mobile;
+        string email;
         bool isProvider;
         bool doesExist;
     }
 
     mapping (address => User) users;
+    mapping (address => Ticket[]) ticketToUser;
 
     struct Ticket{
         address payable owner;
-        uint ticketId;
         uint eventId;
+        uint ticketId;
         bool isSold;
     }
     struct Event{
         address payable owner;
-        string creatorName;
         uint eventId;
         string date;
         uint modeOfTrans;
         uint numTickets;
+        uint mode;
         uint unSoldTickets;
         uint ticketPrice;
+        bool isClosed;
+        uint collections;
         string src;
         string dest;
         Ticket[] tickets;
     }
     
-    function showAllEvents () public returns (Event[] memory){
+    function showAllEvents () public view returns (Event[] memory){
         return events;
     }
 
-    function addUser(string memory _name, bool _isProvider) public{
+    function addUser(string memory _name, string memory _dob, string memory _mobile, string memory _email, bool _isProvider) public{
         User storage provider = users[msg.sender];
         provider.name = _name;
+        provider.dob = _dob;
+        provider.mobile = _mobile;
+        provider.email = _email;
         provider.isProvider = _isProvider;
         provider.doesExist = true;
     }
@@ -50,21 +59,24 @@ contract EventFactory{
         users[msg.sender].doesExist = false;
     }
 
-    function createEvent(string memory _date, uint _mode, uint _numTickets, uint _ticketPrice, string memory _src, string memory _dest) public{
-        require(users[msg.sender].doesExist && users[msg.sender].isProvider);
+    function createEvent(string memory _date, uint _mode, uint _numTickets, uint _ticketPrice, string memory _src, string memory _dest) payable public{
+        require(users[msg.sender].doesExist && users[msg.sender].isProvider, "Only Publisher can create Event");
         events.push({});
         Event storage e = events[eventIndex];
-        // require(false,"Yo");
         e.owner = payable(msg.sender);
         e.eventId = eventIndex;
+        e.date = _date;
+        e.mode = _mode;
         e.numTickets = _numTickets;
         e.unSoldTickets = _numTickets;
         e.ticketPrice = _ticketPrice*10**18;
+        e.isClosed = false;
+        e.collections = 0;
         e.src = _src;
         e.dest = _dest;
-        for(uint i=1; i<=_numTickets; i++){
+        for(uint i=0; i<_numTickets; i++){
             e.tickets.push({});
-            Ticket storage newTicket = e.tickets[i-1];
+            Ticket storage newTicket = e.tickets[i];
             newTicket.owner = payable(msg.sender);
             newTicket.ticketId = i;
             newTicket.eventId = eventIndex;
@@ -100,20 +112,24 @@ contract EventFactory{
         }
         return avail;
     }
-    function buyTicket(uint _eventId, uint _ticketNo) payable public returns(uint) {
-        require(users[msg.sender].doesExist);
+    function buyTicket(uint _eventId, uint _ticketNo) payable public {
+        require(users[msg.sender].doesExist, "No user Exist");
         Event storage e = events[_eventId];
-       require(currentPrice(_eventId) <= msg.value, "The Price of Ticket doesn't match");
-       require(_ticketNo<e.numTickets, "Ticket No. doesn't exist");
-       require(!e.tickets[_ticketNo].isSold, "This ticket is soldout choose another seat");
+        require(!e.isClosed, "The Following Event Have been Closed");
+        require(currentPrice(_eventId) <= msg.value, "The Price of Ticket doesn't match");
+        require(_ticketNo<e.numTickets, "Ticket No. doesn't exist");
+        require(!e.tickets[_ticketNo].isSold, "This ticket is soldout choose another seat");
+        require(!e.isClosed, "The Following Event Have been Closed");
         e.tickets[_ticketNo].isSold = true;
-        e.unSoldTickets--;
         e.tickets[_ticketNo].owner = payable(msg.sender);
-        return e.unSoldTickets;
+        e.collections += msg.value;
+        e.unSoldTickets--;
+        ticketToUser[msg.sender].push(e.tickets[_ticketNo]);
     }
 
     function currentPrice(uint _eventId) public view returns(uint){
         Event storage e = events[_eventId];
+        require(!e.isClosed, "The Following Event Have been Closed");
         if(e.unSoldTickets > 9*e.numTickets/10){
             return e.ticketPrice;
         }
@@ -134,20 +150,27 @@ contract EventFactory{
 
     function sellTicket(uint _eventId, uint _ticketNo) public payable{
         Event storage e = events[_eventId];
-        require(_ticketNo<e.numTickets);
-        require(e.tickets[_ticketNo].owner == msg.sender);
-        require(e.tickets[_ticketNo].isSold);
+        require(_ticketNo<e.numTickets, "Ticket Not Available");
+        require(e.tickets[_ticketNo].owner == msg.sender, "Only Owner can sell the ticket");
+        require(e.tickets[_ticketNo].isSold, "This ticket is soldout choose another seat");
+        require(!e.isClosed, "The following Event have been Closed");
 
         e.tickets[_ticketNo].isSold = false;
         e.unSoldTickets++;
         e.tickets[_ticketNo].owner = e.owner;
-        payable(msg.sender).transfer(3*e.ticketPrice/10);
+        payable(msg.sender).transfer(4*e.ticketPrice/10);
+        e.collections -= 4*e.ticketPrice/10;
+    }
+
+    function showUserTickets() public view returns(Ticket[] memory){
+        return ticketToUser[msg.sender];
     }
 
     function recoverFund(uint _eventId) public payable{
         Event storage e = events[_eventId];
-        require(e.owner == msg.sender);
-        payable(msg.sender).transfer((e.numTickets - e.unSoldTickets)*e.ticketPrice);
+        require(e.owner == msg.sender, "You are not the owner!!Don't try to steal their money");
+        e.isClosed = true;
+        payable(msg.sender).transfer(e.collections);
     }
 
     function bal() public view returns(uint){
