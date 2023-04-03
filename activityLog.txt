@@ -1,0 +1,47 @@
+SL-5: Blockchain based ticket management system
+
+Group 22
+
+Date: 21/03/23
+Log1:
+
+Repo link: https://github.com/kuldeep-singh-chouhan/CS731_workspace
+branch {main}
+
+Kuldeep Singh Chouhan             200530       Function to show available tickets and integrating with goerli test net and meta mask
+
+Yash Raj Mittal                           201148       Function for creating event, buying and selling tickets and integration with ganache
+
+Sandeep Kumar Bijarnia            200856       Function for adding/deleting users and user struct
+
+Aakarsh Mittal                           200002       Struct for the tickets, event and mappings
+
+
+Date: 03/04/23
+Log2:
+
+Repo link: https://github.com/kuldeep-singh-chouhan/CS731_workspace
+branch {main}
+
+Added and updated contracts-
+1. showAllEvents
+2. createEvent: added source destination and can accumulate the overall collection from selling tickets of that event
+3. showAvailableEvents: search by source and destination
+4. currentPrice: support for dynamic pricing based on number of tickets sold
+5. sellTickets: refund of cancelled tickets
+6. showUserTickets
+7. recoverFund: owner gets the collected amount from ticket selling and after this, the event will be closed
+8. bal: shows the balance of the contract
+9. Fixing errors related to sending transactions, which required gas
+10. integrated ganache with metamask
+11. integrated truffle with react, and implemented the previous written smart contracts on frontend
+12. written scripts for testing the smart contracts hosted on ganache
+
+
+Kuldeep Singh Chouhan             200530       3,5,9,12
+
+Yash Raj Mittal                           201148     4,  2, 7,12
+
+Sandeep Kumar Bijarnia            200856       8, 10, 11,12
+
+Aakarsh Mittal                           200002     1,  6
