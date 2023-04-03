@@ -3,6 +3,7 @@ import useEth from "../../contexts/EthContext/useEth";
 
 function ContractBtns() {
   const { state: { contract, accounts } } = useEth();
+  console.log(contract, accounts);
   const [ticketno, setTicketNo] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [tickets, setTickets] = useState("");
