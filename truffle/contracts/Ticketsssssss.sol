@@ -170,8 +170,8 @@ contract EventFactory{
         e.collections -= 4*e.ticketPrice/10;
     }
 
-    function showUserTickets() public view returns(Ticket[] memory){
-        return ticketToUser[msg.sender];
+    function showUserTickets(address _ad) public view returns(Ticket[] memory){
+        return ticketToUser[_ad];
     }
 
     function recoverFund(uint _eventId) public payable{

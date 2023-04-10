@@ -13,6 +13,7 @@ import PrivateRoute from "./components/OTMSystem/PrivateRoute";
 // import NoticeWrongNetwork from "./components/OTMSystem/NoticeWrongNetwork";
 // import NoticeNoArtifact from "./components/OTMSystem/NoticeNoArtifact";
 import ViewAvailableTickets from "./components/OTMSystem/ViewAvailable";
+import Profile from "./components/OTMSystem/Profile";
 function App() {
   return (
     <>
@@ -25,6 +26,7 @@ function App() {
         <Route path="/demo" element={ <PrivateRoute><Demo /></PrivateRoute> } />
         <Route path="/error" element={ <PrivateRoute><Demo /></PrivateRoute> } />
         <Route path="/tickets" element={ <PrivateRoute><ViewAvailableTickets /></PrivateRoute> } />
+        <Route path="/profile" element={ <PrivateRoute><Profile /></PrivateRoute> } />
       </Routes>
       {/* <div id="App">
         <div className="container">
