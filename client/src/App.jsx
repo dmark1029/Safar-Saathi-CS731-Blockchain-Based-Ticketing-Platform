@@ -14,6 +14,7 @@ import PrivateRoute from "./components/OTMSystem/PrivateRoute";
 // import NoticeNoArtifact from "./components/OTMSystem/NoticeNoArtifact";
 import ViewAvailableTickets from "./components/OTMSystem/ViewAvailable";
 import Profile from "./components/OTMSystem/Profile";
+import CreateEvent from "./components/OTMSystem/CreateEvent";
 function App() {
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
         <Route path="/error" element={ <PrivateRoute><Demo /></PrivateRoute> } />
         <Route path="/tickets" element={ <PrivateRoute><ViewAvailableTickets /></PrivateRoute> } />
         <Route path="/profile" element={ <PrivateRoute><Profile /></PrivateRoute> } />
+        <Route path="/createEvent" element={ <PrivateRoute><CreateEvent /></PrivateRoute> } />
       </Routes>
       {/* <div id="App">
         <div className="container">
