@@ -40,6 +40,14 @@ contract EventFactory{
         string dest;
         Ticket[] tickets;
     }
+
+    function UserExist(address _ad) public view returns(bool){
+        return users[_ad].doesExist;
+    }
+
+    function getUserDetails(address _ad) public view returns(string memory, string memory, string memory, string memory, bool){
+        return (users[_ad].name, users[_ad].dob, users[_ad].mobile, users[_ad].email, users[_ad].isProvider);
+    }
     
     function showAllEvents () public view returns (Event[] memory){
         return events;

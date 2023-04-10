@@ -12,7 +12,7 @@ import PrivateRoute from "./components/OTMSystem/PrivateRoute";
 // import NoticeNoUser from "./components/OTMSystem/NoticeLoginUser";
 // import NoticeWrongNetwork from "./components/OTMSystem/NoticeWrongNetwork";
 // import NoticeNoArtifact from "./components/OTMSystem/NoticeNoArtifact";
-
+import ViewAvailableTickets from "./components/OTMSystem/ViewAvailable";
 function App() {
   return (
     <>
@@ -21,9 +21,10 @@ function App() {
     <div className="Routes-landing-page"></div>
     <EthProvider>
       <Routes>
-        <Route path="/" element={<OTMSystem />} />
+        <Route path="/" element={<PrivateRoute><OTMSystem /></PrivateRoute>} />
         <Route path="/demo" element={ <PrivateRoute><Demo /></PrivateRoute> } />
         <Route path="/error" element={ <PrivateRoute><Demo /></PrivateRoute> } />
+        <Route path="/tickets" element={ <PrivateRoute><ViewAvailableTickets /></PrivateRoute> } />
       </Routes>
       {/* <div id="App">
         <div className="container">

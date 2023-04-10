@@ -32,7 +32,7 @@ function Route() {
                 <input type="text" value={index} placeholder="Enter Array Index" onChange={OnChangeIndex} />
                 <button type="submit">Show Tickets</button>
             </form>
-            {show  && <ViewAvailableTickets index={index}/>}
+            {show  && <ViewAvailableTickets/>}
         </>
     )
 }
