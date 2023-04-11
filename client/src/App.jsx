@@ -15,12 +15,14 @@ import PrivateRoute from "./components/OTMSystem/PrivateRoute";
 import ViewAvailableTickets from "./components/OTMSystem/ViewAvailable";
 import Profile from "./components/OTMSystem/Profile";
 import CreateEvent from "./components/OTMSystem/CreateEvent";
+import Navbar from "./components/OTMSystem/Navbar";
 function App() {
   return (
     <>
     <BrowserRouter>
 
     <div className="Routes-landing-page"></div>
+    <Navbar/>
     <EthProvider>
       <Routes>
         <Route path="/" element={<PrivateRoute><OTMSystem /></PrivateRoute>} />

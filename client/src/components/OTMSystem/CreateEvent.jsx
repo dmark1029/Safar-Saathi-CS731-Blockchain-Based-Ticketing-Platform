@@ -30,7 +30,7 @@ function CreateEvent() {
 
 
     return (
-        <div>
+        <div style={{"width":"50%", "marginLeft":"25vw", "paddingTop":"20px"}}>
             <h1>Create Event</h1>
             <Form onSubmit={HandleSubmit}>
                 <Form.Group className="mb-3" controlId="">
