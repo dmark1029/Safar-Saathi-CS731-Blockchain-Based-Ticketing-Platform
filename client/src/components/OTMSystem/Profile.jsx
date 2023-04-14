@@ -5,12 +5,18 @@ import { Row, Col, Container, Button } from "react-bootstrap";
 
 function Profile() {
     const { state: { contract, accounts } } = useEth();
-    const [allTickets, setTickets] = useState([]);
+    const [AllTickets, setAllTickets] = useState([]);
+    const [userTickets, setTickets] = useState([]);
     const [userDetails, setUserDetails] = useState([]);
     const sellTicket = async (eventId, ticketNo) => {
         await contract.methods.sellTicket(eventId, ticketNo).send({from : accounts[0]});
         console.log("Bik Gaya");
         window.location.reload(false);
+    }
+    const showStatus = (eventId, ticketNo) => {
+        const ticket = AllTickets[eventId]['tickets'][ticketNo]
+        if((ticket['owner']===accounts[0] && !ticket['isSold'])||(ticket['owner']!==accounts[0]))return false
+        else return true
     }
     useEffect(() => {
         const getTickets = async () => {
@@ -23,6 +29,16 @@ function Profile() {
         };
         getTickets();
     }, [contract, accounts])
+
+    useEffect(() => {
+        const getAllUser = async () => {
+            const value1 = await contract.methods.showAllEvents().call();
+            console.log(value1);
+            setAllTickets(value1);
+        };
+        getAllUser();
+    }, [contract])
+
     // const [showt, setShowt] = useState(-1);
     return (
         <>
@@ -63,11 +79,13 @@ function Profile() {
                             <th>TicketId</th>
                             <th>Owner</th>
                             <th>Sell</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {allTickets.map((ticket, key) => {
+                        {userTickets.map((ticket, key) => {
                             console.log(ticket);
+                            const flag = showStatus(ticket['eventId'],ticket['ticketId']);
                             return (
                                 <>
 
@@ -76,7 +94,9 @@ function Profile() {
                                         <td>{ticket['eventId']}</td>
                                         <td>{ticket['ticketId']}</td>
                                         <td>{ticket['owner']}</td>
-                                        <td><Button onClick={()=>sellTicket(ticket['eventId'], ticket['ticketId'])}>Sell Ticket</Button></td>
+                                        {flag && <td><Button variant="success" onClick={()=>sellTicket(ticket['eventId'], ticket['ticketId'])}>Sell Ticket</Button></td>}
+                                        {!flag && <td><Button variant="danger" disabled onClick={()=>sellTicket(ticket['eventId'], ticket['ticketId'])}>Cancelled</Button></td>}
+                                        <td></td>
                                     </tr>
                                 </>
                             )
