@@ -6,6 +6,25 @@ import { Row, Col, Container, Button } from "react-bootstrap";
 
 
 function ViewAvailableTickets() {
+        function currentPrice(numTickets, unSoldTickets, ticketPrice){
+        if(unSoldTickets > 9*numTickets/10){
+            return ticketPrice;
+        }
+        else if(unSoldTickets > 8*numTickets/10){
+            return 11*ticketPrice/10;
+        }
+        else if(unSoldTickets > 7*numTickets/10){
+            return 12*ticketPrice/10;
+        }
+        else if(unSoldTickets > 6*numTickets/10){
+            return 13*ticketPrice/10;
+        }
+        else if(unSoldTickets > 5*numTickets/10){
+            return 14*ticketPrice/10;
+        }
+        else return 15*ticketPrice/10;
+    }
+
     const { state: { contract, accounts } } = useEth();
     const [allTickets, setTickets] = useState([]);
     useEffect(() => {
@@ -16,8 +35,10 @@ function ViewAvailableTickets() {
         };
         getTickets();
     }, [contract])
-    const BuyTickets = async (num, index2) => {
-        await contract.methods.buyTicket(index2, num).send({ from: accounts[0], value: 3 * 10 ** 18 });
+    const BuyTickets = async (num, index2, numTickets, unSoldTickets, ticketPrice) => {
+        // await contract.methods.
+        const value = currentPrice(numTickets, unSoldTickets, ticketPrice);
+        await contract.methods.buyTicket(index2, num).send({ from: accounts[0], value:value });
         window.location.reload(false);
     }
     const [showt, setShowt] = useState(-1);
@@ -46,7 +67,7 @@ function ViewAvailableTickets() {
                     <tbody>
                         {allTickets.map((ticket, key) => {
                             // console.log(ticket['src']);
-
+                            const ticketPrice = currentPrice(ticket['numTickets'], ticket['unSoldTickets'], ticket['ticketPrice']);
                             const onClick = () => {  if(key!==showt)setShowt(key);else setShowt(-1); }
                             return (
                                 <>
@@ -57,7 +78,7 @@ function ViewAvailableTickets() {
                                         <td>{ticket['dest']}</td>
                                         <td>{ticket['mode']}</td>
                                         <td>{ticket['unSoldTickets']}</td>
-                                        <td>{ticket['ticketPrice']}</td>
+                                        <td>{ticketPrice}</td>
                                         <td>{ticket['owner']}</td>
                                         <td> <Button onClick={onClick}>{(key!==showt && <span>Show</span>) || (key===showt && <span>Hide</span>)} Tickets</Button> </td>
 
@@ -78,7 +99,7 @@ function ViewAvailableTickets() {
                                                     return (
                                                         <Col>
                                                             <div style={{"padding":"5px"}}></div>
-                                                            <Button disabled={disabled1} onClick={() => BuyTickets(ticket1['ticketId'], ticket['eventId'])}>{ticket1['ticketId']}</Button>
+                                                            <Button disabled={disabled1} onClick={() => BuyTickets(ticket1['ticketId'], ticket['eventId'], ticket['numTickets'], ticket['unSoldTickets'], ticket['ticketPrice'])}>{ticket1['ticketId']}</Button>
                                                         </Col>
 
                                                     )
