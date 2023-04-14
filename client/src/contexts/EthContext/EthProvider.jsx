@@ -47,6 +47,7 @@ function EthProvider({ children }) {
     };
 
     events.forEach(e => window.ethereum.on(e, handleChange));
+   
     return () => {
       events.forEach(e => window.ethereum.removeListener(e, handleChange));
     };

@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useEth } from "../../contexts/EthContext";
 import Table from 'react-bootstrap/Table';
 import { Row, Col, Container, Button } from "react-bootstrap";
-
+import { firebaseConfig } from "./firebase";
 
 
 function ViewAvailableTickets() {
+        console.log( process.env);
+        console.log("API KEY ", process.env.REACT_APP_APIKEY);
+        console.log("firebaseConfig: ", firebaseConfig);
         function currentPrice(numTickets, unSoldTickets, ticketPrice){
         if(unSoldTickets > 9*numTickets/10){
             return ticketPrice;

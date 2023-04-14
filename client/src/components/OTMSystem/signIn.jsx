@@ -23,7 +23,6 @@ function SignIn() {
             const { tt } = await contract.methods.addUser(name, date, mobile, email, 1).send({ from: accounts[0] });
             console.log(tt);
             setLoggedUser(name);
-
             await setDoc(doc(database, "users", accounts[0]), {
                 name: name,
                 date: date,
@@ -33,7 +32,7 @@ function SignIn() {
             });
             window.location.reload(false);
         } catch (error) {
-
+            alert("Some Error Occured");   
         }
 
     }
