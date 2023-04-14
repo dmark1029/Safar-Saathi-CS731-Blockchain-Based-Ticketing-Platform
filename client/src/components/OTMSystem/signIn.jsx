@@ -20,10 +20,10 @@ function SignIn() {
         try {
             let type1 = parseInt(type);
             console.log(name, date, type1, mobile, email);
-            const { tt } = await contract.methods.addUser(name, date, mobile, email, 1).send({ from: accounts[0] });
+            const { tt } = await contract.methods.addUser(name, date, mobile, email, type1).send({ from: accounts[0] });
             console.log(tt);
-            setLoggedUser(name);
-
+            const value = await contract.methods.getUserDetails(accounts[0]).call();
+            setLoggedUser(value);
             await setDoc(doc(database, "users", accounts[0]), {
                 name: name,
                 date: date,
@@ -33,11 +33,11 @@ function SignIn() {
             });
             window.location.reload(false);
         } catch (error) {
-
+            alert("Some Error Occured");   
         }
 
     }
-    console.log("type: ", type);
+    // console.log("type: ", type);
     return (
         <>
             <div style={{ "width": "50%", "marginLeft": "25vw", "paddingTop": "20px" }}>

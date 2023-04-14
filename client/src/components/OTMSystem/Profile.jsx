@@ -29,9 +29,9 @@ function Profile() {
         const getTickets = async () => {
             const value = await contract.methods.getUserDetails(accounts[0]).call();
             setUserDetails(value);
-            console.log(value);
+            // console.log(value);
             const value1 = await contract.methods.showUserTickets(accounts[0]).call();
-            console.log(value1);
+            // console.log(value1);
             setTickets(value1);
             const value2 = await contract.methods.showUserEvents(accounts[0]).call();
             console.log(value2);
