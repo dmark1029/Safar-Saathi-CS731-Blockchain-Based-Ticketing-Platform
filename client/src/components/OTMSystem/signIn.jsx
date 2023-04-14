@@ -4,27 +4,23 @@ import { Form, Button } from "react-bootstrap";
 
 function SignIn(){
     const { state: { contract, accounts }, setLoggedUser } = useEth();
-    const date1 = new Date();
     const handleInputChangeName = e => { setName(e.target.value); };
     const handleInputChangeDate = e => { setDate(e.target.value); };
-    const handleInputChangeMode = e => { setMode(e.target.value); };
-    const handleInputChangeSource = e => { setSource(e.target.value); };
-    const handleInputChangeDestination = e => { setDestination(e.target.value); };
-    const handleInputChangePrice = e => { setPrice(e.target.value); };
-    const handleInputChangeTotalTickets = e => { setTotalTickets(e.target.value); };
+    const handleInputChangeType = e => { setType(e.target.value); };
+    const handleInputChangeMobile = e => { setMobile(e.target.value); };
+    const handleInputChangeEmail = e => { setEmail(e.target.value); };
     const [name, setName] = useState("");
-    const [date, setDate] = useState(toString(date1));
-    const [mode, setMode] = useState(0);
-    const [source, setSource] = useState("");
-    const [destination, setDestination] = useState("");
-    const [price, setPrice] = useState(0);
-    const [totalTickets, setTotalTickets] = useState(0);
+    const [date, setDate] = useState("");
+    const [type, setType] = useState(0);
+    const [mobile, setMobile] = useState("");
+    const [email, setEmail] = useState("");
     const HandleSubmit = async (e) => {
         e.preventDefault();
-        let mode1 = parseInt(mode);
-        console.log(name, date, mode, source, destination, price, totalTickets)
-        const { tt } = await contract.methods.createEvent(date, mode1, totalTickets, price, source, destination).send({ from: accounts[0] });
+        let type1 = parseInt(type);
+        console.log(name, date, type1, mobile, email);
+        const { tt } = await contract.methods.addUser(name,date,mobile,email,type1).send({ from: accounts[0] });
         console.log(tt);
+        setLoggedUser(name);
         window.location.reload(false);
     }
 
@@ -62,40 +58,31 @@ function SignIn(){
     return(
         <>
         <div style={{"width":"50%", "marginLeft":"25vw", "paddingTop":"20px"}}>
-            <h1>Create Event</h1>
+            <h1>Create User</h1>
         <Form onSubmit={HandleSubmit}>
                 <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Name</Form.Label>
-                    <Form.Control inputRef={name} onChange={handleInputChangeName} type="text" placeholder="Enter Event Name" />
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control inputRef={name} onChange={handleInputChangeName} type="text" placeholder="Enter User Name" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Date</Form.Label>
-                    <Form.Control inputRef={date} onChange={handleInputChangeDate} type="date" placeholder="Enter Event Date" />
+                    <Form.Label>Date of Birth</Form.Label>
+                    <Form.Control inputRef={date} onChange={handleInputChangeDate} type="date" placeholder="Enter your DOB" />
                 </Form.Group>
                 <Form.Select aria-label="Default select example">
-                    <Form.Label>Event Mode</Form.Label>
-                    <Form.Control inputRef={mode} onChange={handleInputChangeMode} componentClass="select" placeholder="Select Mode of transportation" />
+                    <Form.Label>User Type</Form.Label>
+                    <Form.Control inputRef={type} onChange={handleInputChangeType} componentClass="select" placeholder="Select User Type" />
                     <option value="">select</option>
-                    <option value="0">Bus</option>
-                    <option value="1">Train</option>
-                    <option value="2">Flight</option>
+                    <option value="0">Buyer</option>
+                    <option value="1">Ticket Publisher</option>
                 </Form.Select>
 
                 <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Source</Form.Label>
-                    <Form.Control inputRef={source} onChange={handleInputChangeSource} type="text" placeholder="Enter Event Source" />
+                    <Form.Label>Mobile Number</Form.Label>
+                    <Form.Control inputRef={mobile} onChange={handleInputChangeMobile} type="number" placeholder="Enter Mobile Number" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Destination</Form.Label>
-                    <Form.Control inputRef={destination} onChange={handleInputChangeDestination} type="text" placeholder="Enter Event Destination" />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Price</Form.Label>
-                    <Form.Control inputRef={price} onChange={handleInputChangePrice} type="number" placeholder="Enter Event Price" />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Total Tickets</Form.Label>
-                    <Form.Control inputRef={totalTickets} onChange={handleInputChangeTotalTickets} type="number" placeholder="Enter Event Total Tickets" />
+                    <Form.Label>Email Id</Form.Label>
+                    <Form.Control inputRef={email} onChange={handleInputChangeEmail} type="text" placeholder="Enter Email Id" />
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Submit
