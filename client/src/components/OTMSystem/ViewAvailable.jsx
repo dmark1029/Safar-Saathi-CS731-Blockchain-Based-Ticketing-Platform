@@ -69,6 +69,12 @@ function ViewAvailableTickets() {
                             // console.log(ticket['src']);
                             const ticketPrice = currentPrice(ticket['numTickets'], ticket['unSoldTickets'], ticket['ticketPrice']);
                             const onClick = () => {  if(key!==showt)setShowt(key);else setShowt(-1); }
+                            const getMode = (mode) => {
+                                if(mode === 0) return "Train";
+                                else if(mode === 1) return "Bus";
+                                else if(mode === 2) return "Flight";
+                                else return "Car";
+                            }
                             return (
                                 <>
                                     <tr>
@@ -76,7 +82,7 @@ function ViewAvailableTickets() {
                                         <td>{ticket['date']}</td>
                                         <td>{ticket['src']}</td>
                                         <td>{ticket['dest']}</td>
-                                        <td>{ticket['mode']}</td>
+                                        <td>{getMode(ticket['mode'])}</td>
                                         <td>{ticket['unSoldTickets']}</td>
                                         <td>{ticketPrice}</td>
                                         <td>{ticket['owner']}</td>

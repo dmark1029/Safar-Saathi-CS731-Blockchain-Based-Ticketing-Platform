@@ -8,12 +8,17 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
+    "dotenv": "^16.0.3",
+    "dotenv-webpack": "^8.0.1",
     "firebase": "^9.19.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
     "web3": "^1.8.2"
+  },
+  "overrides": {
+    "react-error-overlay": "6.0.9"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.18.6",
