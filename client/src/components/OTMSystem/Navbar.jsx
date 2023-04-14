@@ -1,8 +1,22 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 function NavbarComp() {
+  const navigate = useNavigate();
+  const ClickHome = () => {
+    navigate("");
+  }
+  const ClickE = () => {
+    navigate("/createEvent", false);
+  }
+  const ClickProfile = () => {
+    navigate("/profile", false);
+  }
+  const ClickTickets = () => {
+    navigate("/tickets", false);
+  }
   return (
     <>
       {/* <Navbar bg="dark" variant="dark">
@@ -18,11 +32,11 @@ function NavbarComp() {
       <br /> */}
       <Navbar bg="primary" variant="dark">
         <Container>
-          <Navbar.Brand href="/">Home</Navbar.Brand>
+          <Navbar.Brand onClick={ClickHome}>Home</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/createEvent">createEvent</Nav.Link>
-            <Nav.Link href="/profile">View Profile</Nav.Link>
-            <Nav.Link href="/tickets">Book Tickets</Nav.Link>
+            <Nav.Link onClick={ClickE} >createEvent</Nav.Link>
+            <Nav.Link onClick={ClickProfile} >View Profile</Nav.Link>
+            <Nav.Link onClick={ClickTickets} >Book Tickets</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import useEth from "../../contexts/EthContext/useEth";
 import { Form, Button } from "react-bootstrap";
-
+// import { database } from "./firebase";
+// import { doc, setDoc } from "firebase/firestore"; 
 function CreateEvent() {
+    
     const date1 = new Date();
     const { state: { contract, accounts } } = useEth();
     const handleInputChangeName = e => { setName(e.target.value); };
@@ -21,10 +23,23 @@ function CreateEvent() {
     const [totalTickets, setTotalTickets] = useState(0);
     const HandleSubmit = async (e) => {
         e.preventDefault();
-        let mode1 = parseInt(mode);
-        console.log(name, date, mode, source, destination, price, totalTickets)
-        const { tt } = await contract.methods.createEvent(date, mode1, totalTickets, price, source, destination).send({ from: accounts[0] });
-        console.log(tt);
+        try {
+            let mode1 = parseInt(mode);
+            console.log(name, date, mode, source, destination, price, totalTickets)
+            const { tt } = await contract.methods.createEvent(date, mode1, totalTickets, price, source, destination).send({ from: accounts[0] });
+            console.log(tt);
+            // await setDoc(doc(database, "events", "LA"), {
+            //     name: "Los Angeles",
+            //     state: "CA",
+            //     country: "USA"
+            //   });
+        } catch (error) {
+            alert(error);
+        }
+        
+       
+        
+
         window.location.reload(false);
     }
 
