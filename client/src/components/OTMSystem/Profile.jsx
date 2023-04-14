@@ -74,7 +74,7 @@ function Profile() {
                 <Table striped bordered hover variant="">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>S No.</th>
                             <th>Event ID</th>
                             <th>TicketId</th>
                             <th>Owner</th>
