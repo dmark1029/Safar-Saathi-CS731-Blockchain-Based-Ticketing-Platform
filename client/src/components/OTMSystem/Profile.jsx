@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useEth } from "../../contexts/EthContext";
 import Table from 'react-bootstrap/Table';
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 
 function Profile() {
     const { state: { contract, accounts } } = useEth();
     const [allTickets, setTickets] = useState([]);
     const [userDetails, setUserDetails] = useState([]);
+    const sellTicket = async (eventId, ticketNo) => {
+        await contract.methods.sellTicket(eventId, ticketNo).send({from : accounts[0]});
+        console.log("Bik Gaya");
+        window.location.reload(false);
+    }
     useEffect(() => {
         const getTickets = async () => {
             const value = await contract.methods.getUserDetails(accounts[0]).call();
@@ -57,6 +62,7 @@ function Profile() {
                             <th>Event ID</th>
                             <th>TicketId</th>
                             <th>Owner</th>
+                            <th>Sell</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,6 +76,7 @@ function Profile() {
                                         <td>{ticket['eventId']}</td>
                                         <td>{ticket['ticketId']}</td>
                                         <td>{ticket['owner']}</td>
+                                        <td><Button onClick={()=>sellTicket(ticket['eventId'], ticket['ticketId'])}>Sell Ticket</Button></td>
                                     </tr>
                                 </>
                             )
