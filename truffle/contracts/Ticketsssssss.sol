@@ -25,6 +25,7 @@ contract EventFactory{
         uint eventId;
         uint ticketId;
         bool isSold;
+        bool isCancelled;
     }
     struct Event{
         address payable owner;
@@ -134,6 +135,7 @@ contract EventFactory{
         e.tickets[_ticketNo].owner = payable(msg.sender);
         e.collections += msg.value;
         e.unSoldTickets--;
+        e.tickets[_ticketNo].isCancelled = false;
         ticketToUser[msg.sender].push(e.tickets[_ticketNo]);
     }
 
@@ -158,7 +160,7 @@ contract EventFactory{
         else return 15*e.ticketPrice/10;
     }
 
-    function sellTicket(uint _eventId, uint _ticketNo) public payable{
+    function sellTicket(uint _eventId, uint _ticketNo, uint key) public payable{
         Event storage e = events[_eventId];
         require(_ticketNo<e.numTickets, "Ticket Not Available");
         require(e.tickets[_ticketNo].owner == msg.sender, "Only Owner can sell the ticket");
@@ -170,6 +172,7 @@ contract EventFactory{
         e.tickets[_ticketNo].owner = e.owner;
         payable(msg.sender).transfer(4*e.ticketPrice/10);
         e.collections -= 4*e.ticketPrice/10;
+        ticketToUser[msg.sender][key].isCancelled = true;
     }
 
     function showUserEvents(address _ad) public view returns(uint[] memory){
