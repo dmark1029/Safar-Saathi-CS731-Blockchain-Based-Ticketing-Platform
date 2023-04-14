@@ -18,6 +18,7 @@ contract EventFactory{
 
     mapping (address => User) users;
     mapping (address => Ticket[]) ticketToUser;
+    mapping (address => uint[]) eventToUser;
 
     struct Ticket{
         address payable owner;
@@ -90,6 +91,7 @@ contract EventFactory{
             newTicket.eventId = eventIndex;
             newTicket.isSold = false;
         }
+        eventToUser[msg.sender].push(eventIndex);
         eventIndex++;
     }
 
@@ -168,6 +170,10 @@ contract EventFactory{
         e.tickets[_ticketNo].owner = e.owner;
         payable(msg.sender).transfer(4*e.ticketPrice/10);
         e.collections -= 4*e.ticketPrice/10;
+    }
+
+    function showUserEvents(address _ad) public view returns(uint[] memory){
+        return eventToUser[_ad];
     }
 
     function showUserTickets(address _ad) public view returns(Ticket[] memory){

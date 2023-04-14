@@ -7,10 +7,17 @@ function Profile() {
     const { state: { contract, accounts } } = useEth();
     const [AllTickets, setAllTickets] = useState([]);
     const [userTickets, setTickets] = useState([]);
+    const [userEvents, setEvents] = useState([]);
     const [userDetails, setUserDetails] = useState([]);
     const sellTicket = async (eventId, ticketNo) => {
         await contract.methods.sellTicket(eventId, ticketNo).send({from : accounts[0]});
         console.log("Bik Gaya");
+        window.location.reload(false);
+        console.log("Bik Gaya Na");
+
+    }
+    const recoverFund = async (eventId) => {
+        await contract.methods.recoverFund(eventId).send({from : accounts[0]});
         window.location.reload(false);
     }
     const showStatus = (eventId, ticketNo) => {
@@ -26,6 +33,9 @@ function Profile() {
             const value1 = await contract.methods.showUserTickets(accounts[0]).call();
             console.log(value1);
             setTickets(value1);
+            const value2 = await contract.methods.showUserEvents(accounts[0]).call();
+            console.log(value2);
+            setEvents(value2);
         };
         getTickets();
     }, [contract, accounts])
@@ -68,7 +78,7 @@ function Profile() {
                 </Table>
                 <Row>
                     <Col>
-                        <h2>Tickets</h2>
+                        <h2>Created Events</h2>
                     </Col>
                 </Row>
                 <Table striped bordered hover variant="">
@@ -76,8 +86,52 @@ function Profile() {
                         <tr>
                             <th>S No.</th>
                             <th>Event ID</th>
+                            <th>Total Tickets</th>
+                            <th>Sold Tickets</th>
+                            <th>Collection Till Now</th>
+                            <th>Get Money</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {userEvents.map((eventId, key) => {
+                            console.log(eventId);
+                            const flag = AllTickets[eventId]['isClosed']
+                            return (
+                                <>
+
+                                    <tr>
+                                        <td>{key + 1}</td>
+                                        <td>{eventId}</td>
+                                        <td>{AllTickets[eventId]['numTickets']}</td>
+                                        <td>{AllTickets[eventId]['numTickets']-AllTickets[eventId]['unSoldTickets']}</td>
+                                        <td>{AllTickets[eventId]['collections']}</td>
+                                        {!flag && <td><Button variant="success" onClick={()=>recoverFund(eventId)}>Recover Money</Button></td>}
+                                        {flag && <td><Button variant="danger" disabled onClick={()=>recoverFund(eventId)}>Event CLosed</Button></td>}
+                                        <td></td>
+                                    </tr>
+                                </>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+
+
+
+
+
+                <Row>
+                    <Col>
+                        <h2>Tickets</h2>
+                    </Col>
+                </Row>
+                <Table striped bordered hover variant="">
+                    <thead>
+                        <tr>
+                            <th>S No.</th>
+                            <th>Event Creator</th>
                             <th>TicketId</th>
-                            <th>Owner</th>
+                            <th>Source</th>
+                            <th>Destination</th>
                             <th>Sell</th>
                             <th>Status</th>
                         </tr>
@@ -91,9 +145,10 @@ function Profile() {
 
                                     <tr>
                                         <td>{key + 1}</td>
-                                        <td>{ticket['eventId']}</td>
-                                        <td>{ticket['ticketId']}</td>
                                         <td>{ticket['owner']}</td>
+                                        <td>{ticket['ticketId']}</td>
+                                        <td>{ticket['src']}</td>
+                                        <td>{ticket['dest']}</td>
                                         {flag && <td><Button variant="success" onClick={()=>sellTicket(ticket['eventId'], ticket['ticketId'])}>Sell Ticket</Button></td>}
                                         {!flag && <td><Button variant="danger" disabled onClick={()=>sellTicket(ticket['eventId'], ticket['ticketId'])}>Cancelled</Button></td>}
                                         <td></td>
