@@ -53,7 +53,7 @@ function ViewAvailableTickets() {
                 <Table striped bordered hover variant="">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>S No.</th>
                             <th>Date</th>
                             <th>Source</th>
                             <th>Destination</th>
@@ -78,7 +78,7 @@ function ViewAvailableTickets() {
                             return (
                                 <>
                                     <tr>
-                                        <td>1</td>
+                                        <td>{key + 1}</td>
                                         <td>{ticket['date']}</td>
                                         <td>{ticket['src']}</td>
                                         <td>{ticket['dest']}</td>
