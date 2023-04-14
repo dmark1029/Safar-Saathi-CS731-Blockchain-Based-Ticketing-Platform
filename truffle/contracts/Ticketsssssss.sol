@@ -45,8 +45,8 @@ contract EventFactory{
         return users[_ad].doesExist;
     }
 
-    function getUserDetails(address _ad) public view returns(string memory, string memory, string memory, string memory, bool){
-        return (users[_ad].name, users[_ad].dob, users[_ad].mobile, users[_ad].email, users[_ad].isProvider);
+    function getUserDetails(address _ad) public view returns(string memory, string memory, string memory, string memory, bool, bool){
+        return (users[_ad].name, users[_ad].dob, users[_ad].mobile, users[_ad].email, users[_ad].isProvider, users[_ad].doesExist);
     }
     
     function showAllEvents () public view returns (Event[] memory){

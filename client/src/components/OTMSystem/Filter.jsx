@@ -4,10 +4,10 @@ import React, { useState, useEffect } from "react";
 import { useEth } from "../../contexts/EthContext";
 import Table from 'react-bootstrap/Table';
 import { Row, Col, Container, Button } from "react-bootstrap";
-import { Form } from "react-bootstrap";
+
 import "./filter.css";
 
-export default function ViewAvailableTickets() {
+export default function Filter() {
     function currentPrice(numTickets, unSoldTickets, ticketPrice) {
         if (unSoldTickets > 9 * numTickets / 10) {
             return ticketPrice;
@@ -29,7 +29,6 @@ export default function ViewAvailableTickets() {
 
     const { state: { contract, accounts } } = useEth();
     // const [items, setItems] = useState([]);
-    const [_priceFilter, setPriceFilter] = useState(false);
     const [_src, setSrc] = useState("");
     const [_dest, setDest] = useState("");
     const [searchParam] = useState(["src", "dest"]);
@@ -38,12 +37,6 @@ export default function ViewAvailableTickets() {
 
     useEffect(() => {
         function search(items) {
-            // Sort items by price
-            if(_priceFilter){
-                items.sort((a, b) => {
-                    return a["ticketPrice"] - b["ticketPrice"];
-                });
-            }
             return items.filter((item) => {
                 // console.log("item: ", item);
                 if (item["src"].toString().toLowerCase().indexOf(_src.toLowerCase()) > -1) {
@@ -67,7 +60,7 @@ export default function ViewAvailableTickets() {
 
         };
         getTickets();
-    }, [contract, _src, searchParam, _dest, filterParam, _priceFilter])
+    }, [contract, _src, searchParam, _dest, filterParam])
     const BuyTickets = async (num, index2, numTickets, unSoldTickets, ticketPrice) => {
         // await contract.methods.
         const value = currentPrice(numTickets, unSoldTickets, ticketPrice);
@@ -130,21 +123,7 @@ export default function ViewAvailableTickets() {
                             </select>
                             <span className="focus"></span>
                         </div>
-                        
                     </div>
-                    <div style={{padding:"5px"}}>
-                        <Form>
-                            <Form.Check
-                                onChange={(e) => {
-                                    setPriceFilter(e.target.checked);
-                                }}
-                                type="switch"
-                                id="custom-switch"
-                                label="Sort by Price"
-                            />
-                        </Form>
-                    </div>
-                    
                     <Table striped bordered hover variant="">
                         <thead>
                             <tr>

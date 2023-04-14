@@ -7,15 +7,18 @@ import ViewAvailableTickets from "./components/OTMSystem/ViewAvailable";
 import Profile from "./components/OTMSystem/Profile";
 import CreateEvent from "./components/OTMSystem/CreateEvent";
 import Navbar from "./components/OTMSystem/Navbar";
+import Filter from "./components/OTMSystem/Filter";
 function App() {
   return (
     <>
     <BrowserRouter>
 
     <div className="Routes-landing-page"></div>
-    <Navbar/>
+    
     <EthProvider>
+    <Navbar/>
       <Routes>
+        <Route path="/filter" element={<Filter />} />
         <Route path="/" element={<PrivateRoute><OTMSystem /></PrivateRoute>} />
         <Route path="/tickets" element={ <PrivateRoute><ViewAvailableTickets /></PrivateRoute> } />
         <Route path="/profile" element={ <PrivateRoute><Profile /></PrivateRoute> } />

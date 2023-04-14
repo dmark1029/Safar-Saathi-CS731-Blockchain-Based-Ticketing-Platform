@@ -16,9 +16,9 @@ function Profile() {
         const getTickets = async () => {
             const value = await contract.methods.getUserDetails(accounts[0]).call();
             setUserDetails(value);
-            console.log(value);
+            // console.log(value);
             const value1 = await contract.methods.showUserTickets(accounts[0]).call();
-            console.log(value1);
+            // console.log(value1);
             setTickets(value1);
         };
         getTickets();
@@ -67,7 +67,7 @@ function Profile() {
                     </thead>
                     <tbody>
                         {allTickets.map((ticket, key) => {
-                            console.log(ticket);
+                            // console.log(ticket);
                             return (
                                 <>
 

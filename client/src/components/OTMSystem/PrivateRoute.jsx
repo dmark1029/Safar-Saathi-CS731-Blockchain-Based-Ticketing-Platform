@@ -5,7 +5,7 @@ import NoticeNoArtifact from "./NoticeNoArtifact";
 import NoticeNoUser from "./NoticeLoginUser";
 import NoticeWrongNetwork from "./NoticeWrongNetwork";
 import SignIn from "./signIn";
-
+import DeletedUser from "./NoticeLoginUser";
 
 function PrivateRoute ({ children }) {
   const { loggedUser, state, setLoggedUser } = useEth();
@@ -17,12 +17,13 @@ function PrivateRoute ({ children }) {
     if(flag && !loggedUser) {
       let tt = await state.contract.methods.getUserDetails(state.accounts[0]).call();
       // console.log(tt);
-      setLoggedUser(tt[0]);
+      setLoggedUser(tt);
     }
   }
   checkUser();
   // if(!loggedUser) return <NoticeNoUser/>
   if(!loggedUser) return <><NoticeNoUser/> <SignIn/></> 
+  if(!loggedUser[5]) return  <><NoticeNoUser/> <DeletedUser/></> 
   return children ;
 }
 
