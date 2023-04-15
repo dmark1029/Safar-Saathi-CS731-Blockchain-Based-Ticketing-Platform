@@ -12,7 +12,7 @@ function OTMSystem() {
     return (
         <div className="main-container">
             <div className="main-heading">
-                <h3>Online Ticket Management System</h3>
+                <h1 ><b>Safar Saathi</b></h1><h3><i>Online Ticket Management System</i></h3>
             </div>
             {page}
         </div>

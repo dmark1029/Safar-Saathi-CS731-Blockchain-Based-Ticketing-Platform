@@ -50,18 +50,18 @@ function CreateEvent() {
 
     return (
         <div style={{ "width": "50%", "marginLeft": "25vw", "paddingTop": "20px" }}>
-            <h1>Create Event</h1>
+            <h1>Publish Tickets</h1>
             <Form onSubmit={HandleSubmit}>
                 <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Name</Form.Label>
+                    <Form.Label>Agency Name</Form.Label>
                     <Form.Control inputRef={name} onChange={handleInputChangeName} type="text" placeholder="Enter Event Name" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Date</Form.Label>
+                    <Form.Label>Date</Form.Label>
                     <Form.Control inputRef={date} onChange={handleInputChangeDate} type="date" placeholder="Enter Event Date" />
                 </Form.Group>
                 <Form.Group controlId="formBasicSelect">
-                    <Form.Label>Event Mode</Form.Label>
+                    <Form.Label>Mode</Form.Label>
                     <Form.Select
                         value={mode}
                         onChange={(e) => { setMode(e.currentTarget.value); }}
@@ -74,19 +74,19 @@ function CreateEvent() {
                     </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Source</Form.Label>
+                    <Form.Label>Source</Form.Label>
                     <Form.Control inputRef={source} onChange={handleInputChangeSource} type="text" placeholder="Enter Event Source" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Destination</Form.Label>
+                    <Form.Label>Destination</Form.Label>
                     <Form.Control inputRef={destination} onChange={handleInputChangeDestination} type="text" placeholder="Enter Event Destination" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Price</Form.Label>
+                    <Form.Label>Ticket Price</Form.Label>
                     <Form.Control inputRef={price} onChange={handleInputChangePrice} type="number" placeholder="Enter Event Price" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="">
-                    <Form.Label>Event Total Tickets</Form.Label>
+                    <Form.Label>Number of Tickets</Form.Label>
                     <Form.Control inputRef={totalTickets} onChange={handleInputChangeTotalTickets} type="number" placeholder="Enter Event Total Tickets" />
                 </Form.Group>
                 <Button variant="primary" type="submit">

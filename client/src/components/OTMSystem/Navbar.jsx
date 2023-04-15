@@ -43,8 +43,8 @@ function NavbarComp() {
         <Container>
           <Navbar.Brand onClick={ClickHome}>Home</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link onClick={ClickE} >createEvent</Nav.Link>
-            <Nav.Link onClick={ClickProfile} >View Profile</Nav.Link>
+            <Nav.Link onClick={ClickE} >Publish Tickets</Nav.Link>
+            <Nav.Link onClick={ClickProfile} >User Profile</Nav.Link>
             <Nav.Link onClick={ClickTickets} >Book Tickets</Nav.Link>
           </Nav>
         </Container>
