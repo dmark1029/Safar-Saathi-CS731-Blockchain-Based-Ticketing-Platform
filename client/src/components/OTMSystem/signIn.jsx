@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { database } from "./firebase";
 import { doc, setDoc } from "firebase/firestore";
+import img from "./img.png";
 function SignIn() {
     const { state: { contract, accounts }, setLoggedUser } = useEth();
     const handleInputChangeName = e => { setName(e.target.value); };
@@ -42,7 +43,8 @@ function SignIn() {
     // console.log("type: ", type);
     return (
         <>
-            <div style={{ "width": "50%", "marginLeft": "25vw", "paddingTop": "20px" }}>
+            <div style={{ "width": "50%", "marginLeft": "25vw", "paddingTop": "0px" }}>
+            <img src={img} alt="" height="245px"  />
                 <h1>Create User</h1>
                 <Form onSubmit={HandleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -51,11 +53,11 @@ function SignIn() {
                     {!anonymous && <>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Name</Form.Label>
-                        <Form.Control inputRef={name} onChange={handleInputChangeName} type="text" placeholder="Enter User Name" />
+                        <Form.Control required inputRef={name} onChange={handleInputChangeName} type="text" placeholder="Enter User Name" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Date of Birth</Form.Label>
-                        <Form.Control inputRef={date} onChange={handleInputChangeDate} type="date" placeholder="Enter your DOB" />
+                        <Form.Control required inputRef={date} onChange={handleInputChangeDate} type="date" placeholder="Enter your DOB" />
                     </Form.Group>
                     </>
                     }
@@ -74,11 +76,11 @@ function SignIn() {
                     {!anonymous && <>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Mobile Number</Form.Label>
-                        <Form.Control inputRef={mobile} onChange={handleInputChangeMobile} type="number" placeholder="Enter Mobile Number" />
+                        <Form.Control required inputRef={mobile} onChange={handleInputChangeMobile} type="number" placeholder="Enter Mobile Number" />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Email Id</Form.Label>
-                        <Form.Control inputRef={email} onChange={handleInputChangeEmail} type="text" placeholder="Enter Email Id" />
+                        <Form.Control required inputRef={email} onChange={handleInputChangeEmail} type="text" placeholder="Enter Email Id" />
                     </Form.Group>
                     </>
                     }

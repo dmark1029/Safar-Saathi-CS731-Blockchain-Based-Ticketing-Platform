@@ -9,7 +9,7 @@ import { database } from "../firebase";
 import {doc, getDoc} from "firebase/firestore";
 import QRCode from "react-qr-code";
 import { useEffect, useState } from "react";
-
+import img from "../img.png";
 const Card = (props) => {
   const [owner, setOwner] = useState("");
   const docRef = doc(database, "users", props.owner);
@@ -51,8 +51,8 @@ const Card = (props) => {
       subtitle: "A"+props.ticketId,
     },
     {
-      title: "Seat",
-      subtitle: "A1",
+      title: "Event_No.",
+      subtitle: "E" + props.eventId,
     },
   ];
   let card = {
@@ -67,6 +67,7 @@ const Card = (props) => {
 
 
   return (
+    <>
     <div className="card-container">
       <div className="bg_img">
       </div>
@@ -117,7 +118,12 @@ const Card = (props) => {
           strokeMiterlimit="10"
         />
       </svg>
+      
     </div>
+    <div className="card-container1">
+    <img src={img} alt="" height="245px"  />
+    </div>
+    </>
   );
 };
 

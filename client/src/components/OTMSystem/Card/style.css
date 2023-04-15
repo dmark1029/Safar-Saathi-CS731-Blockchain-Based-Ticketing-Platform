@@ -10,7 +10,7 @@
     background-repeat: no-repeat;
     background-position: center;
     width: 400px;
-    height: 256px;
+    height: 512px;
     position: absolute;
     top: 0;
     left: 0;
@@ -26,6 +26,21 @@
     padding: 20px;
     border: 1px solid black;
     border-bottom: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .card-container1 {
+    position: relative;
+    box-sizing: border-box;
+    width: 400px;
+    height: 256px;
+    font-size: 16px;
+    padding: 20px;
+    border: 1px solid black;
+    border-top: 0;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
