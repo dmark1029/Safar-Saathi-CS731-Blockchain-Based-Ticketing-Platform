@@ -102,6 +102,7 @@ export default function ViewAvailableTickets() {
         <div className="wrapper">
 
             <div className="card-grid">
+                
                 <Container>
                     <Row>
                         <Col>
@@ -201,8 +202,8 @@ export default function ViewAvailableTickets() {
                                 <th>Destination</th>
                                 <th>Mode</th>
                                 <th>Tickets Available</th>
-                                <th>Ticket Price</th>
-                                <th>Owner</th>
+                                <th>Ticket Price (ETH)</th>
+                                <th>Publisher's Address</th>
                                 <th>Buy Tickets</th>
                             </tr>
                         </thead>
@@ -231,7 +232,7 @@ export default function ViewAvailableTickets() {
                                             <td>{ticket['dest']}</td>
                                             <td>{getMode(ticket['mode'])}</td>
                                             <td>{ticket['unSoldTickets']}</td>
-                                            <td>{ticketPrice}</td>
+                                            <td>{ticketPrice/1000000000000000000}</td>
                                             <td>{ticket['owner']}</td>
                                             <td> <Button onClick={onClick}>{(key !== showt && <span>Show</span>) || (key === showt && <span>Hide</span>)} Tickets</Button> </td>
 

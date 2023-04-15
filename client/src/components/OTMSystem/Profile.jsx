@@ -61,10 +61,10 @@ function Profile() {
                 <Table striped bordered hover variant="">
                     <thead>
                         <tr>
-                            <th>Username</th>
+                            <th>User Name</th>
                             <th>DOB</th>
                             <th>Phone Number</th>
-                            <th>Email</th>
+                            <th>Email ID</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +78,7 @@ function Profile() {
                 </Table>
                 <Row>
                     <Col>
-                        <h2>Created Events</h2>
+                        <h2>Published Events</h2>
                     </Col>
                 </Row>
                 <Table striped bordered hover variant="">
@@ -88,8 +88,8 @@ function Profile() {
                             <th>Event ID</th>
                             <th>Total Tickets</th>
                             <th>Sold Tickets</th>
-                            <th>Collection Till Now</th>
-                            <th>Get Money</th>
+                            <th>Collection Till Now (ETH)</th>
+                            <th>Event Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -105,7 +105,7 @@ function Profile() {
                                         <td>{eventId}</td>
                                         <td>{AllTickets[eventId]['numTickets']}</td>
                                         <td>{AllTickets[eventId]['numTickets']-AllTickets[eventId]['unSoldTickets']}</td>
-                                        <td>{AllTickets[eventId]['collections']}</td>
+                                        <td>{AllTickets[eventId]['collections']/1000000000000000000}</td>
                                         {!flag && <td><Button variant="success" onClick={()=>recoverFund(eventId)}>Recover Money</Button></td>}
                                         {flag && <td><Button variant="danger" disabled onClick={()=>recoverFund(eventId)}>Event CLosed</Button></td>}
                                         <td></td>
@@ -117,15 +117,15 @@ function Profile() {
                 </Table>
                 <Row>
                     <Col>
-                        <h2>Tickets</h2>
+                        <h2>My Tickets</h2>
                     </Col>
                 </Row>
                 <Table striped bordered hover variant="">
                     <thead>
                         <tr>
                             <th>S No.</th>
-                            <th>Event Creator</th>
-                            <th>TicketId</th>
+                            <th>Publisher's Address</th>
+                            <th>Ticket ID</th>
                             <th>Source</th>
                             <th>Destination</th>
                             <th>Sell</th>
