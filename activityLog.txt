@@ -64,12 +64,15 @@ Final/Frontend Updates-
    6. Delete User option
    7. Add New User Section
    8. Book Tickets section with search based filter on several Parameters to buy tickets based on EventId and TicketNumber.
-   9. Project Report and Activity Log
+   9. User Can download ticket
+   10. Ticket Can be verified using QR code
+   11. Testing Script for Checking Multiple Users and Tickets
+   12. Project Report and Activity Log
 
-Kuldeep Singh Chouhan             200530       5,7,9
+Kuldeep Singh Chouhan             200530       5,7,11,12
 
-Yash Raj Mittal                   201148       1,3,9
+Yash Raj Mittal                   201148       1,3,9,12
 
-Sandeep Kumar Bijarnia            200856       2,8,9
+Sandeep Kumar Bijarnia            200856       2,8,10,12
 
-Aakarsh Mittal                    200002       4,6,9
+Aakarsh Mittal                    200002       4,6,12
