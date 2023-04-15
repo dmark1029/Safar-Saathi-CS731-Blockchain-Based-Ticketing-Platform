@@ -10,11 +10,11 @@ branch {main}
 
 Kuldeep Singh Chouhan             200530       Function to show available tickets and integrating with goerli test net and meta mask
 
-Yash Raj Mittal                           201148       Function for creating event, buying and selling tickets and integration with ganache
+Yash Raj Mittal                   201148       Function for creating event, buying and selling tickets and integration with ganache
 
 Sandeep Kumar Bijarnia            200856       Function for adding/deleting users and user struct
 
-Aakarsh Mittal                           200002       Struct for the tickets, event and mappings
+Aakarsh Mittal                    200002       Struct for the tickets, event and mappings
 
 
 Date: 03/04/23
@@ -40,11 +40,11 @@ Added and updated contracts-
 
 Kuldeep Singh Chouhan             200530       3,5,9,12
 
-Yash Raj Mittal                           201148     4,  2, 7,12
+Yash Raj Mittal                   201148     4,  2, 7,12
 
 Sandeep Kumar Bijarnia            200856       8, 10, 11,12
 
-Aakarsh Mittal                           200002     1,  6
+Aakarsh Mittal                    200002     1,  6
 
 Date: 15/04/2023
 Log3:
