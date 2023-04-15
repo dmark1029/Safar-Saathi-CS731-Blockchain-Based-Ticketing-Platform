@@ -54,12 +54,7 @@ export default function ViewAvailableTickets() {
                         return a["unSoldTickets"] - b["unSoldTickets"];
                     });
                 }
-                return items.filter((item) => {
-                    if(item["unSoldTickets"] > 0){
-                        return true;
-                    }
-                    return false;
-                });
+               
             }
             return items.filter((item) => {
                 // console.log("item: ", item);
@@ -70,6 +65,12 @@ export default function ViewAvailableTickets() {
                     if (item["dest"].toString().toLowerCase().indexOf(_dest.toLowerCase()) > -1) {
                         if (item["mode"].toString().toLowerCase().indexOf(filterParam.toLowerCase()) > -1) {
                             if (item["date"].toString().toLowerCase().indexOf(_date.toLowerCase()) > -1) {
+                                if(_showAvailable){
+                                    if(item["unSoldTickets"] > 0){
+                                        return true;
+                                    }
+                                    return false;
+                                }
                                 return true;
                             }
                         }
