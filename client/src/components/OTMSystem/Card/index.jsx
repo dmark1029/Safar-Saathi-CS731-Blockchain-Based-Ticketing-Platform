@@ -63,7 +63,7 @@ const Card = (props) => {
     arrival_time: time,
     meta: meta,
   };
-
+  const qr = props.eventId + "_" + props.ticketId + "_" + props.owner;
 
 
   return (
@@ -98,7 +98,7 @@ const Card = (props) => {
               bgColor="transparent"
               size={256}
               style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-              value="Sandeep Sandeep Sandeep"
+              value={qr}
               
             />
           </div>

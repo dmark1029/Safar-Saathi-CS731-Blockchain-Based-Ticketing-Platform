@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useEth } from "../../contexts/EthContext";
 import Table from 'react-bootstrap/Table';
 import { Row, Col, Container, Button } from "react-bootstrap";
-import TicketDownload from "./TicketDownload";
+// import TicketDownload from "./TicketDownload";
 import Card from "./Card";
 import { useReactToPrint } from 'react-to-print';
 import { useRef } from "react";
@@ -10,6 +10,7 @@ function Profile() {
     const componentRef = useRef();
     const { state: { contract, accounts } } = useEth();
     const { loggedUser } = useEth();
+    // console.log(loggedUser)
     const [loaded, setLoading] = useState(false);
     const [AllTickets, setAllTickets] = useState([]);
     const [userTickets, setTickets] = useState([]);
@@ -167,7 +168,7 @@ function Profile() {
                                                     eventId={ticket['eventId']}
                                                     src={AllTickets[ticket['eventId']]['src']}
                                                     dest={AllTickets[ticket['eventId']]['dest']}
-                                                    owner={AllTickets[ticket['eventId']]['owner']}
+                                                    owner={accounts[0]}
                                                     date={AllTickets[ticket['eventId']]['date']}
                                                     mode = {AllTickets[ticket['eventId']]['mode']}
                                                     />
@@ -257,14 +258,19 @@ function Profile() {
                                             {!flag && <td><Button variant="danger" disabled onClick={() => sellTicket(ticket['eventId'], ticket['ticketId'], key)}>Cancelled</Button></td>}
                                             <td><Button variant="primary" onClick={handlePrint}>Download</Button></td>
                                             <div style={{"display":"none"}} >
-                                                <div ref = {componentRef} >
-                                                    <TicketDownload 
+                                                <div ref = {componentRef} style={{"width":"100%"}} >
+                                                    <div style={{"padding":"10vw"}}>
+
+                                                    <Card
                                                     ticketId={ticket['ticketId']}
                                                     eventId={ticket['eventId']}
                                                     src={AllTickets[ticket['eventId']]['src']}
                                                     dest={AllTickets[ticket['eventId']]['dest']}
-                                                    owner={AllTickets[ticket['eventId']]['owner']}
+                                                    owner={accounts[0]}
+                                                    date={AllTickets[ticket['eventId']]['date']}
+                                                    mode = {AllTickets[ticket['eventId']]['mode']}
                                                     />
+                                                    </div>
                                                 </div>
                                             </div>
                                             
