@@ -43,9 +43,10 @@ npm start
 ```
 8.	Go to the localhost http://localhost:8080/
 9.	Set up Ganache local wallet in MetaMask 
+```
   a.	Login to MetaMask
   b.	Manually setup Ganache with the given details
   c.	Open Ganache and import an account from private key By clicking the key logo shown below
   d.	Import the account in MetaMask, through clicking import account and then enter and save the private key. Connect to that account.
- 
+ ```
 10.	You are all set when prompted to create a new user.
