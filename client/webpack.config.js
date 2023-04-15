@@ -20,14 +20,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/i,
+        test: /\.(jsx)?$/i,
         use: [
           {
             loader: "babel-loader",
             options: {
               presets: [["@babel/preset-react", { runtime: "automatic" }]],
-            },
-          },
+            }
+          },         
         ],
         exclude: /node_modules/,
       },
@@ -35,6 +35,18 @@ module.exports = {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test:/\.(png|jpg|jpeg)$/i,
+        use:[
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 25000,
+            }
+          },
+        ]
+      },
+     
     ],
   },
   plugins: [
