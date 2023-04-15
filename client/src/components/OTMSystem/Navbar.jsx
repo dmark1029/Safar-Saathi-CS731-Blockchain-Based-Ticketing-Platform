@@ -28,6 +28,9 @@ function NavbarComp() {
   const UpdateUserProfile = () => {
     navigate("/updateUser", false);
   }
+  const VerifyTicket = () => {
+    navigate("/verify", false);
+  }
   if(!loggedUser) return null;
   if(!loggedUser[5]) return null;
   if(!loggedUser[4]) return (
@@ -41,6 +44,7 @@ function NavbarComp() {
           <Nav.Link onClick={ClickTickets} >Book Tickets</Nav.Link>
           <Nav.Link onClick={UpdateUserProfile} >Update Profile</Nav.Link>
           <Nav.Link onClick={ClickDelete} > Delete User</Nav.Link>
+          <Nav.Link onClick={VerifyTicket} > Verify Ticket</Nav.Link>
 
         </Nav>
       </Container>
@@ -60,6 +64,7 @@ function NavbarComp() {
             <Nav.Link onClick={ClickTickets} >Book Tickets</Nav.Link>
             <Nav.Link onClick={UpdateUserProfile} >Update Profile</Nav.Link>
             <Nav.Link onClick={ClickDelete} > Delete User</Nav.Link>
+            <Nav.Link onClick={VerifyTicket} > Verify Ticket</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

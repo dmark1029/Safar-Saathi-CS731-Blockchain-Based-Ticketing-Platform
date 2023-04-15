@@ -9,6 +9,8 @@ import CreateEvent from "./components/OTMSystem/CreateEvent";
 import Navbar from "./components/OTMSystem/Navbar";
 import Filter from "./components/OTMSystem/Filter";
 import UpdateUser from "./components/OTMSystem/UpdateUser";
+// import Card from "./components/OTMSystem/Card/index";
+import Test from "./components/OTMSystem/Scanner";
 function App() {
   return (
     <>
@@ -25,6 +27,8 @@ function App() {
         <Route path="/profile" element={ <PrivateRoute><Profile /></PrivateRoute> } />
         <Route path="/createEvent" element={ <PrivateRoute><CreateEvent /></PrivateRoute> } />
         <Route path="/updateUser" element={ <PrivateRoute><UpdateUser /></PrivateRoute> } />
+        {/* <Route path="/ticketDownload" element={ <PrivateRoute><TicketDownload /></PrivateRoute> } /> */}
+        <Route path="/verify" element={ <PrivateRoute><Test /></PrivateRoute> } />
       </Routes>
     </EthProvider>
     </BrowserRouter>

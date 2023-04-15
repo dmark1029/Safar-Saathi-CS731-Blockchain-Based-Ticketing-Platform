@@ -54,19 +54,23 @@ export default function ViewAvailableTickets() {
                         return a["unSoldTickets"] - b["unSoldTickets"];
                     });
                 }
-                return items.filter((item) => {
-                    if(item["unSoldTickets"] > 0){
-                        return true;
-                    }
-                    return false;
-                });
+               
             }
             return items.filter((item) => {
                 // console.log("item: ", item);
+                if(item["isClosed"] === true){
+                    return false;
+                }
                 if (item["src"].toString().toLowerCase().indexOf(_src.toLowerCase()) > -1) {
                     if (item["dest"].toString().toLowerCase().indexOf(_dest.toLowerCase()) > -1) {
                         if (item["mode"].toString().toLowerCase().indexOf(filterParam.toLowerCase()) > -1) {
                             if (item["date"].toString().toLowerCase().indexOf(_date.toLowerCase()) > -1) {
+                                if(_showAvailable){
+                                    if(item["unSoldTickets"] > 0){
+                                        return true;
+                                    }
+                                    return false;
+                                }
                                 return true;
                             }
                         }
