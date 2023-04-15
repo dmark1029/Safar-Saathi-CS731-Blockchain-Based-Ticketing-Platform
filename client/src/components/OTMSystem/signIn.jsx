@@ -15,6 +15,7 @@ function SignIn() {
     const [type, setType] = useState("");
     const [mobile, setMobile] = useState("");
     const [email, setEmail] = useState("");
+    const [anonymous, setAnonymous] = useState(false);
     const HandleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -43,6 +44,10 @@ function SignIn() {
             <div style={{ "width": "50%", "marginLeft": "25vw", "paddingTop": "20px" }}>
                 <h1>Create User</h1>
                 <Form onSubmit={HandleSubmit}>
+                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                        <Form.Check type="checkbox" label="Anonymous" onChange={(e) => { setAnonymous(e.currentTarget.checked); console.log("anonymous: ", e.currentTarget.checked); }} />  
+                    </Form.Group>
+                    {!anonymous && <>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Name</Form.Label>
                         <Form.Control inputRef={name} onChange={handleInputChangeName} type="text" placeholder="Enter User Name" />
@@ -51,7 +56,9 @@ function SignIn() {
                         <Form.Label>Date of Birth</Form.Label>
                         <Form.Control inputRef={date} onChange={handleInputChangeDate} type="date" placeholder="Enter your DOB" />
                     </Form.Group>
-                    <Form.Group controlId="formBasicSelect">
+                    </>
+                    }
+                    <Form.Group controlId="formBasicSelect" style={{"paddingBottom":"10px"}}>
                         <Form.Label>Select User Type</Form.Label>
                         <Form.Select
                             value={type}
@@ -63,7 +70,7 @@ function SignIn() {
                             <option value="1">Ticket Provider</option>
                         </Form.Select>
                     </Form.Group>
-
+                    {!anonymous && <>
                     <Form.Group className="mb-3" controlId="">
                         <Form.Label>Mobile Number</Form.Label>
                         <Form.Control inputRef={mobile} onChange={handleInputChangeMobile} type="number" placeholder="Enter Mobile Number" />
@@ -72,6 +79,8 @@ function SignIn() {
                         <Form.Label>Email Id</Form.Label>
                         <Form.Control inputRef={email} onChange={handleInputChangeEmail} type="text" placeholder="Enter Email Id" />
                     </Form.Group>
+                    </>
+                    }
                     <Button variant="primary" type="submit">
                         Submit
                     </Button>
