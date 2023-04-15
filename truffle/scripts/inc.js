@@ -1,36 +1,50 @@
-/*
-  Try `truffle exec scripts/increment.js`, you should `truffle migrate` first.
-
-  Learn more about Truffle external scripts: 
-  https://trufflesuite.com/docs/truffle/getting-started/writing-external-scripts
-*/
-
 const SimpleStorage = artifacts.require("EventFactory");
 
 module.exports = async function (callback) {
   const deployed = await SimpleStorage.deployed();
-  // console.log("Printing.. ", deployed.get());
-
-  const { tx } = await deployed.addUser("sandeep", 1);
-  console.log(`Confirmed transaction ${tx}`);
-    // console.log(deployed);
-    const {st} = await deployed.createEvent("yash", 10,1,"delhi", "kanpur");
-    const {st1} = await deployed.createEvent("y", 69,5,"dehi", "anpur");
-
-    const eval = (await deployed.eventIndex.call()).toNumber();
+  console.log("deployed.. ");
+  console.log("");
+let eval;
+  for (let i = 0; i < 102; i++) {
+    let mode = i%3; // transport model
+    let userType = (i%2)^1; // userType// first provider then consumer
+    let userName = "user_"+i.toString();
     
-    console.log((await deployed.showAvailableTickets(eval-2)).toString());
-    console.log((await deployed.showAvailableTickets(eval-1)).toString());
-    console.log(eval);
-    console.log((await deployed.buyTicket.sendTransaction(eval-2,6)));
-    // console.log((await deployed.buyTicket.call(eval-2,6)).toString());
-    // const {aa} = await deployed.buyTicket.send(eval-2,6);
-    // const {aa} = await deployed.currentPrice(0);
-    console.log((await deployed.showAvailableTickets(eval-2)).toString());
-    console.log((await deployed.currentPrice.call((eval-1))).toString());
-    // console.log(await deployed.showAvailableTickets(0));
-//   const updatedValue = (await deployed.get()).toNumber();
-//   console.log(`Updated SimpleStorage value: ${updatedValue}`);
-    console.log(await deployed.events.call(eval-2));
+    
+    // ("(await deployed.getUserDetails({tx})).toString()");
+
+    if(userType==0){
+      const { tx } = await deployed.addUser(userName,"dob","mob", "email", userType);
+    console.log("Buyer ",  `${tx}`,userName, " of type ", userType.toString() );
+      // console.log(eval);
+      // let {ht} = await deployed.buyTicket.sendTransaction(eval-1,0);
+      
+      // buyer buys half of prevoiusly made tickets
+      // for(let j =0; j<i;i=i+2){
+      //   await deployed.buyTicket.sendTransaction(eval-1,j);
+      // }
+      // console.log("tickets available after buying {", (await deployed.showAvailableTickets(eval-1)).toString(), "}");
+
+
+      console.log("");
+    }
+    else{
+      const { tx } = await deployed.addUser(userName,"dob","mob", "email", userType);
+    console.log("Publisher ",  `${tx}`,userName, " of type ", userType.toString() );
+      // provider
+      let src = "src_"+i.toString();
+      let dst = "dst_"+i.toString();
+      let numTickets = (i+1)%51;
+      let {st} = await deployed.createEvent("date",mode, numTickets,  i%3+1,src, dst);
+      eval = (await deployed.eventIndex.call()).toNumber();
+      // console.log(eval);
+      console.log("tickets made {", (await deployed.showAvailableTickets(eval-1)).toString(), "}");
+      console.log(numTickets.toString(), " Tickets made from ",src, " to ", dst, " of price ",  (i%3+1).toString());
+      
+
+      console.log("");
+    }
+    
+  }
   callback();
 };
