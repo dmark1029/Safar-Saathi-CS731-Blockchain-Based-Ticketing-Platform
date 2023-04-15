@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { useEth } from '../../contexts/EthContext';
 function NavbarComp() {
+  const { state: { contract, accounts } } = useEth();
   const { loggedUser } = useEth();
   // console.log(loggedUser);
   const navigate = useNavigate();
@@ -19,6 +20,10 @@ function NavbarComp() {
   const ClickTickets = () => {
     navigate("/tickets", false);
   }
+  const ClickDelete = async () => {
+    await contract.methods.deleteUser().send({from : accounts[0]});
+    navigate("/", false);
+  }
   if(!loggedUser) return null;
   if(!loggedUser[5]) return null;
   if(!loggedUser[4]) return (
@@ -30,6 +35,7 @@ function NavbarComp() {
           {/* <Nav.Link onClick={ClickE} >createEvent</Nav.Link> */}
           <Nav.Link onClick={ClickProfile} >View Profile</Nav.Link>
           <Nav.Link onClick={ClickTickets} >Book Tickets</Nav.Link>
+          <Nav.Link onClick={ClickDelete} > Delete User</Nav.Link>
         </Nav>
       </Container>
     </Navbar>
@@ -46,6 +52,7 @@ function NavbarComp() {
             <Nav.Link onClick={ClickE} >createEvent</Nav.Link>
             <Nav.Link onClick={ClickProfile} >View Profile</Nav.Link>
             <Nav.Link onClick={ClickTickets} >Book Tickets</Nav.Link>
+            <Nav.Link onClick={ClickDelete} > Delete User</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
