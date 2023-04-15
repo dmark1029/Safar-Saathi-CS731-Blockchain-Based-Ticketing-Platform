@@ -20,19 +20,23 @@ Web3.js v1.8.2
 Download the GUI of Ganache and open it.
 
 5.	Change the directory to truffle and migrate the smart contract.
-
+```
 cd truffle
+```
+```
 truffle migrate
-
+```
 6.	Open a new terminal and change directory to client and install npm
 
 cd ..
 cd client
+```
 npm install --force
-
+```
 7.	Start the frontend portal
+```
 npm start
-
+```
 8.	Go to the localhost http://localhost:8080/
 9.	Set up Ganache local wallet in MetaMask 
 a.	Login to MetaMask
