@@ -22,7 +22,11 @@ function NavbarComp() {
   }
   const ClickDelete = async () => {
     await contract.methods.deleteUser().send({from : accounts[0]});
+    window.location.reload(false);
     navigate("/", false);
+  }
+  const UpdateUserProfile = () => {
+    navigate("/updateUser", false);
   }
   if(!loggedUser) return null;
   if(!loggedUser[5]) return null;
@@ -35,7 +39,9 @@ function NavbarComp() {
           {/* <Nav.Link onClick={ClickE} >createEvent</Nav.Link> */}
           <Nav.Link onClick={ClickProfile} >View Profile</Nav.Link>
           <Nav.Link onClick={ClickTickets} >Book Tickets</Nav.Link>
+          <Nav.Link onClick={UpdateUserProfile} >Update Profile</Nav.Link>
           <Nav.Link onClick={ClickDelete} > Delete User</Nav.Link>
+
         </Nav>
       </Container>
     </Navbar>
@@ -52,6 +58,7 @@ function NavbarComp() {
             <Nav.Link onClick={ClickE} >createEvent</Nav.Link>
             <Nav.Link onClick={ClickProfile} >View Profile</Nav.Link>
             <Nav.Link onClick={ClickTickets} >Book Tickets</Nav.Link>
+            <Nav.Link onClick={UpdateUserProfile} >Update Profile</Nav.Link>
             <Nav.Link onClick={ClickDelete} > Delete User</Nav.Link>
           </Nav>
         </Container>
