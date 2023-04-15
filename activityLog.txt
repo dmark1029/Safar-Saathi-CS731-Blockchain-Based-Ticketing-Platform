@@ -45,3 +45,34 @@ Yash Raj Mittal                           201148     4,  2, 7,12
 Sandeep Kumar Bijarnia            200856       8, 10, 11,12
 
 Aakarsh Mittal                           200002     1,  6
+
+Date: 15/04/2023
+Log3:
+
+Repo link: https://github.com/kuldeep-singh-chouhan/CS731_workspace
+branch {main}
+
+Backend Related Updates-
+1. Mapping for ticketToUser and eventToUser and related helper functions to get data in frontend.
+2. Connected Firebase to store UserData and EventData.
+
+Final/Frontend Updates-
+   Modified and Added Several Components on the frontend:-
+   3. Created Profile Component with section of Published Events with recover Fund functionality and My Tickets Componentto sell the tickets.
+   4. Update Profile section
+   5. Publish Ticket for creating new tickets only accesible to Publishers.
+   6. Delete User option
+   7. Add New User Section
+   8. Book Tickets section with search based filter on several Parameters to buy tickets based on EventId and TicketNumber.
+   9. User Can download ticket
+   10. Ticket Can be verified using QR code
+   11. Testing Script for Checking Multiple Users and Tickets
+   12. Project Report and Activity Log
+
+Kuldeep Singh Chouhan             200530       5,7,11,12
+
+Yash Raj Mittal                   201148       1,3,9,12
+
+Sandeep Kumar Bijarnia            200856       2,8,10,12
+
+Aakarsh Mittal                    200002       4,6,12
