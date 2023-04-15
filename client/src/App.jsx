@@ -8,6 +8,7 @@ import Profile from "./components/OTMSystem/Profile";
 import CreateEvent from "./components/OTMSystem/CreateEvent";
 import Navbar from "./components/OTMSystem/Navbar";
 import Filter from "./components/OTMSystem/Filter";
+import UpdateUser from "./components/OTMSystem/UpdateUser";
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
         <Route path="/tickets" element={ <PrivateRoute><ViewAvailableTickets /></PrivateRoute> } />
         <Route path="/profile" element={ <PrivateRoute><Profile /></PrivateRoute> } />
         <Route path="/createEvent" element={ <PrivateRoute><CreateEvent /></PrivateRoute> } />
+        <Route path="/updateUser" element={ <PrivateRoute><UpdateUser /></PrivateRoute> } />
       </Routes>
     </EthProvider>
     </BrowserRouter>

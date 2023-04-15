@@ -6,6 +6,7 @@ import { Row, Col, Container, Button } from "react-bootstrap";
 function Profile() {
     const { state: { contract, accounts } } = useEth();
     const { loggedUser } = useEth();
+    const [loaded, setLoading] = useState(false);
     const [AllTickets, setAllTickets] = useState([]);
     const [userTickets, setTickets] = useState([]);
     const [userEvents, setEvents] = useState([]);
@@ -36,21 +37,17 @@ function Profile() {
             // console.log(value1);
             setTickets(value1);
             const value2 = await contract.methods.showUserEvents(accounts[0]).call();
-            console.log(value2);
+            // console.log(value2);
             setEvents(value2);
+
+            const value3 = await contract.methods.showAllEvents().call();
+            // console.log(value1);
+            setAllTickets(value3);
+            setLoading(true);
+           
         };
         getTickets();
     }, [contract, accounts])
-
-    useEffect(() => {
-        const getAllUser = async () => {
-            const value1 = await contract.methods.showAllEvents().call();
-            console.log(value1);
-            setAllTickets(value1);
-        };
-        getAllUser();
-    }, [contract])
-
     // const [showt, setShowt] = useState(-1);
     if(loggedUser[4])
     return (
@@ -97,7 +94,8 @@ function Profile() {
                     </thead>
                     <tbody>
                         {userEvents.map((eventId, key) => {
-                            console.log(eventId);
+                            // console.log(eventId);
+                            if(!loaded) return <></>;
                             const flag = AllTickets[eventId]['isClosed']
                             return (
                                 <>
@@ -136,7 +134,10 @@ function Profile() {
                     </thead>
                     <tbody>
                         {userTickets.map((ticket, key) => {
-                            console.log(ticket);
+                            if(!loaded) return <></>;
+                            console.log("EventId: ",ticket['eventId']); 
+                            console.log(":Ticket details ", AllTickets[ticket['eventId']]);
+                            console.log("Owner: ", AllTickets[ticket['eventId']]['owner']);
                             const flag = showStatus(key);
                             return (
                                 <>
@@ -205,14 +206,14 @@ function Profile() {
                     </thead>
                     <tbody>
                         {userTickets.map((ticket, key) => {
-                            console.log(ticket);
+                            // console.log(ticket);
                             const flag = showStatus(key);
                             return (
                                 <>
 
                                     <tr>
                                         <td>{key + 1}</td>
-                                        <td>{AllTickets[ticket['eventId']]['owner']}</td>
+                                        {/* <td>{AllTickets[ticket['eventId']]['owner']}</td> */}
                                         <td>{ticket['ticketId']}</td>
                                         <td>{AllTickets[ticket['eventId']]['src']}</td>
                                         <td>{AllTickets[ticket['eventId']]['dest']}</td>

@@ -26,22 +26,39 @@ export default function ViewAvailableTickets() {
         }
         else return 15 * ticketPrice / 10;
     }
-
     const { state: { contract, accounts } } = useEth();
     // const [items, setItems] = useState([]);
     const [_priceFilter, setPriceFilter] = useState(false);
+    const [_showAvailable, setAvailableFilter] = useState(false);
     const [_src, setSrc] = useState("");
     const [_dest, setDest] = useState("");
+    const [_date, setDate] = useState("");
     const [searchParam] = useState(["src", "dest"]);
     const [filterParam, setFilterParam] = useState("");
     const [allTickets, setTickets] = useState([]);
-
+    console.log(_priceFilter);
     useEffect(() => {
         function search(items) {
             // Sort items by price
             if(_priceFilter){
                 items.sort((a, b) => {
-                    return a["ticketPrice"] - b["ticketPrice"];
+                    const p1 = currentPrice(a["numTickets"], a["unSoldTickets"], a["ticketPrice"]);
+                    const p2 = currentPrice(b["numTickets"], b["unSoldTickets"], b["ticketPrice"]);
+                    return p1 - p2;
+                });
+            }
+            // Sort items by Available
+            if(_showAvailable){
+                if(!_priceFilter){
+                    items.sort((b,a) => {
+                        return a["unSoldTickets"] - b["unSoldTickets"];
+                    });
+                }
+                return items.filter((item) => {
+                    if(item["unSoldTickets"] > 0){
+                        return true;
+                    }
+                    return false;
                 });
             }
             return items.filter((item) => {
@@ -49,7 +66,9 @@ export default function ViewAvailableTickets() {
                 if (item["src"].toString().toLowerCase().indexOf(_src.toLowerCase()) > -1) {
                     if (item["dest"].toString().toLowerCase().indexOf(_dest.toLowerCase()) > -1) {
                         if (item["mode"].toString().toLowerCase().indexOf(filterParam.toLowerCase()) > -1) {
-                            return true;
+                            if (item["date"].toString().toLowerCase().indexOf(_date.toLowerCase()) > -1) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -67,7 +86,7 @@ export default function ViewAvailableTickets() {
 
         };
         getTickets();
-    }, [contract, _src, searchParam, _dest, filterParam, _priceFilter])
+    }, [contract, _src, searchParam, _dest, filterParam, _priceFilter, _date, _showAvailable])
     const BuyTickets = async (num, index2, numTickets, unSoldTickets, ticketPrice) => {
         // await contract.methods.
         const value = currentPrice(numTickets, unSoldTickets, ticketPrice);
@@ -114,6 +133,18 @@ export default function ViewAvailableTickets() {
                             />
                             <span className="sr-only">Destination here</span>
                         </label>
+                        <label htmlFor="search-form">
+                            <input
+                                type="date"   
+                                name="search-form"
+                                id="search-form"
+                                className="search-input"
+                                placeholder="Search for Date..."
+                                value={_date}
+                                onChange={(e) => setDate(e.target.value)}
+                            />
+                            <span className="sr-only">Date here</span>
+                        </label>
 
                         <div className="select">
                             <select
@@ -131,9 +162,12 @@ export default function ViewAvailableTickets() {
                             <span className="focus"></span>
                         </div>
                         
+                        
                     </div>
                     <div style={{padding:"5px"}}>
                         <Form>
+                            <Row>
+                                <Col>
                             <Form.Check
                                 onChange={(e) => {
                                     setPriceFilter(e.target.checked);
@@ -142,6 +176,18 @@ export default function ViewAvailableTickets() {
                                 id="custom-switch"
                                 label="Sort by Price"
                             />
+                            </Col>
+                            <Col>
+                            <Form.Check
+                                onChange={(e) => {
+                                    setAvailableFilter(e.target.checked);
+                                }}
+                                type="switch"
+                                id="custom-switch"
+                                label="Show Available Tickets Only"
+                            />
+                            </Col>
+                            </Row>
                         </Form>
                     </div>
                     
@@ -150,6 +196,7 @@ export default function ViewAvailableTickets() {
                             <tr>
                                 <th>S No.</th>
                                 <th>Date</th>
+                                <th>Time</th>
                                 <th>Source</th>
                                 <th>Destination</th>
                                 <th>Mode</th>
@@ -171,11 +218,15 @@ export default function ViewAvailableTickets() {
                                     else if (mode === "2") return "Flight";
                                     else return "Car";
                                 }
+                                
+                                const timeArray = ticket['date'].split('_');
+                                
                                 return (
                                     <>
                                         <tr>
                                             <td>{key + 1}</td>
-                                            <td>{ticket['date']}</td>
+                                            <td>{timeArray[0]}</td>
+                                            <td>{timeArray[1]}</td>
                                             <td>{ticket['src']}</td>
                                             <td>{ticket['dest']}</td>
                                             <td>{getMode(ticket['mode'])}</td>
@@ -186,6 +237,7 @@ export default function ViewAvailableTickets() {
 
                                         </tr>
                                         <tr>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>

@@ -9,17 +9,33 @@ function CreateEvent() {
     // const navigate = useNavigate();
     const date1 = new Date();
     const { state: { contract, accounts }, loggedUser } = useEth();
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
     
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [year, month, day].join('-');
+    }
     
     const handleInputChangeName = e => { setName(e.target.value); };
     const handleInputChangeDate = e => { setDate(e.target.value); };
+    const handleInputChangeTime = e => { setTime(e.target.value); };
     // const handleInputChangeMode = e => { setMode(e.target.value); };
     const handleInputChangeSource = e => { setSource(e.target.value); };
     const handleInputChangeDestination = e => { setDestination(e.target.value); };
     const handleInputChangePrice = e => { setPrice(e.target.value); };
     const handleInputChangeTotalTickets = e => { setTotalTickets(e.target.value); };
+
     const [name, setName] = useState("");
-    const [date, setDate] = useState(toString(date1));
+    const [date, setDate] = useState(formatDate(date1));
+    // console.log("date: ", date);
+    const [time, setTime] = useState("");
     const [mode, setMode] = useState(0);
     const [source, setSource] = useState("");
     const [destination, setDestination] = useState("");
@@ -29,21 +45,12 @@ function CreateEvent() {
         e.preventDefault();
         try {
             let mode1 = parseInt(mode);
-            // console.log(name, date, mode, source, destination, price, totalTickets)
-            const { tt } = await contract.methods.createEvent(date, mode1, totalTickets, price, source, destination).send({ from: accounts[0] });
+            const temp = date + "_" + time;
+            const { tt } = await contract.methods.createEvent(temp, mode1, totalTickets, price, source, destination).send({ from: accounts[0] });
             console.log(tt);
-            // await setDoc(doc(database, "events", "LA"), {
-            //     name: "Los Angeles",
-            //     state: "CA",
-            //     country: "USA"
-            //   });
         } catch (error) {
             alert(error);
         }
-
-
-
-
         window.location.reload(false);
     }
     if(!loggedUser[4]) return (<Error/>);
@@ -58,7 +65,11 @@ function CreateEvent() {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="">
                     <Form.Label>Event Date</Form.Label>
-                    <Form.Control inputRef={date} onChange={handleInputChangeDate} type="date" placeholder="Enter Event Date" />
+                    <Form.Control defaultValue={date} inputRef={date} onChange={handleInputChangeDate} type="date" placeholder="Enter Event Date" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="">
+                    <Form.Label>Event Time</Form.Label>
+                    <Form.Control inputRef={time} onChange={handleInputChangeTime} type="time" placeholder="Enter Event Time" />
                 </Form.Group>
                 <Form.Group controlId="formBasicSelect">
                     <Form.Label>Event Mode</Form.Label>
