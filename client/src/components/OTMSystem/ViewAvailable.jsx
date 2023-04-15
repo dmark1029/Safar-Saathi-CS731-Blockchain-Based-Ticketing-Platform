@@ -63,6 +63,9 @@ export default function ViewAvailableTickets() {
             }
             return items.filter((item) => {
                 // console.log("item: ", item);
+                if(item["isClosed"] === true){
+                    return false;
+                }
                 if (item["src"].toString().toLowerCase().indexOf(_src.toLowerCase()) > -1) {
                     if (item["dest"].toString().toLowerCase().indexOf(_dest.toLowerCase()) > -1) {
                         if (item["mode"].toString().toLowerCase().indexOf(filterParam.toLowerCase()) > -1) {
