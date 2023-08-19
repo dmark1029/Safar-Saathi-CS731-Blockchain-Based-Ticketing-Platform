@@ -1,5 +1,5 @@
-# CS731_workspace
-This is the repository for the ongoing project in the course cs731
+# Safar Saathi
+This is the repository for the ongoing project in the course CS731
 ![alt img](https://github.com/sandeepb20/saathi731A/blob/main/img.png)
 ## Instructions to Run
 1.	Clone the main branch from the Repository
